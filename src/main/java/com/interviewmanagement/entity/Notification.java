@@ -1,5 +1,7 @@
 package com.interviewmanagement.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,7 @@ public class Notification {
 	private String message;
 	private String dateTime;
 	@ManyToMany
-	private User user;
+	private List<User> user;
 	public int getNotificationId() {
 		return notificationId;
 	}
@@ -34,10 +36,10 @@ public class Notification {
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
-	public User getUser() {
+	public List<User> getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(List<User> user) {
 		this.user = user;
 	}
 	@Override

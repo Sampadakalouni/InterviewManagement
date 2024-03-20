@@ -10,4 +10,5 @@ public class InterviewMnanagementApplication {
 		SpringApplication.run(InterviewMnanagementApplication.class, args);
 	}
 
+	
 }

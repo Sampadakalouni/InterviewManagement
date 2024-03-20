@@ -1,14 +1,11 @@
 package com.interviewmanagement.dao;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.interviewmanagement.entity.JobPosting;
+import com.interviewmanagement.entity.Candidate;
 
 @Repository
-public interface JobPostingDao extends JpaRepository<JobPosting, Integer> {
-	 
+public interface CandiateDao extends JpaRepository<Candidate, Integer> {
 
 }

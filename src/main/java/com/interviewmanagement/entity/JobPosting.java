@@ -10,7 +10,7 @@ public class JobPosting {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String jobId;
+	private Integer jobId;
 	private String title;
 	private String description;
 	private String department;
@@ -23,10 +23,10 @@ public class JobPosting {
 	private String requirements;
 	private String publishedDate;
 	private String filled;
-	public String getJobId() {
+	public Integer getJobId() {
 		return jobId;
 	}
-	public void setJobId(String jobId) {
+	public void setJobId(Integer jobId) {
 		this.jobId = jobId;
 	}
 	public String getTitle() {

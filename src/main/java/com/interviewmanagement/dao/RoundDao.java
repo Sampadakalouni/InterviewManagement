@@ -1,14 +1,11 @@
 package com.interviewmanagement.dao;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.interviewmanagement.entity.JobPosting;
+import com.interviewmanagement.entity.Round;
 
 @Repository
-public interface JobPostingDao extends JpaRepository<JobPosting, Integer> {
-	 
+public interface RoundDao extends JpaRepository<Round, Integer> {
 
 }

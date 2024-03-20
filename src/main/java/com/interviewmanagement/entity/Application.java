@@ -1,5 +1,7 @@
 package com.interviewmanagement.entity;
 
+import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,19 +13,19 @@ public class Application {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private  int  applicationId;
+	private  Integer  applicationId;
 	private String status;
 	private String submissionDate;
 	private String coverLetterText;
 	private String statusDate;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private JobPosting jobPosting;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Candidate candidate;
-	public int getApplicationId() {
+	public Integer getApplicationId() {
 		return applicationId;
 	}
-	public void setApplicationId(int applicationId) {
+	public void setApplicationId(Integer applicationId) {
 		this.applicationId = applicationId;
 	}
 	public String getStatus() {

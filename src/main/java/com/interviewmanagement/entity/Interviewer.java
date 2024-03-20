@@ -9,14 +9,14 @@ import jakarta.persistence.Id;
 public class Interviewer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int interviewerId;
+	private Integer interviewerId;
 	private String name;
 	private String email;
 	private long phone;
-	public int getInterviewerId() {
+	public Integer getInterviewerId() {
 		return interviewerId;
 	}
-	public void setInterviewerId(int interviewerId) {
+	public void setInterviewerId(Integer interviewerId) {
 		this.interviewerId = interviewerId;
 	}
 	public String getName() {

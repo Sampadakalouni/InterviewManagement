@@ -1,33 +1,34 @@
 package com.interviewmanagement.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+
 
 @Entity
 public class InterviewSchedule {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int scheduleId; 
+	private Integer scheduleId; 
 	private String scheduledDate;
 	private String scheduledTime;
 	private String location;
 	private boolean status;
-	@OneToOne
-	private Interview interview;
-	@ManyToOne
-	private Round round;
-	@ManyToMany
-	private Interviewer interviewer;
-	public int getScheduleId() {
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Interview> interview;
+	
+	public Integer getScheduleId() {
 		return scheduleId;
 	}
-	public void setScheduleId(int scheduleId) {
+	public void setScheduleId(Integer scheduleId) {
 		this.scheduleId = scheduleId;
 	}
 	public String getScheduledDate() {
@@ -54,35 +55,24 @@ public class InterviewSchedule {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public Interview getInterview() {
+	public List<Interview> getInterview() {
 		return interview;
 	}
-	public void setInterview(Interview interview) {
+	public void setInterview(List<Interview> interview) {
 		this.interview = interview;
-	}
-	public Round getRound() {
-		return round;
-	}
-	public void setRound(Round round) {
-		this.round = round;
-	}
-	public Interviewer getInterviewer() {
-		return interviewer;
-	}
-	public void setInterviewer(Interviewer interviewer) {
-		this.interviewer = interviewer;
 	}
 	@Override
 	public String toString() {
 		return "InterviewSchedule [scheduleId=" + scheduleId + ", scheduledDate=" + scheduledDate + ", scheduledTime="
 				+ scheduledTime + ", location=" + location + ", status=" + status + ", interview=" + interview
-				+ ", round=" + round + ", interviewer=" + interviewer + ", getScheduleId()=" + getScheduleId()
-				+ ", getScheduledDate()=" + getScheduledDate() + ", getScheduledTime()=" + getScheduledTime()
-				+ ", getLocation()=" + getLocation() + ", isStatus()=" + isStatus() + ", getInterview()="
-				+ getInterview() + ", getRound()=" + getRound() + ", getInterviewer()=" + getInterviewer()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ ", getScheduleId()=" + getScheduleId() + ", getScheduledDate()=" + getScheduledDate()
+				+ ", getScheduledTime()=" + getScheduledTime() + ", getLocation()=" + getLocation() + ", isStatus()="
+				+ isStatus() + ", getInterview()=" + getInterview() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
+	
+	
 	
 	
 }

@@ -2,6 +2,9 @@ package com.interviewmanagement.entity;
 
 import java.util.List;
 
+
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,23 +18,23 @@ public class InterviewFeedback {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String feedback_Id;
+	private Integer feedback_Id;
 	private String feedback;
 	private String strengths;
 	private String weaknesses;
 	private String technicalSkills;
 	private String communicationSkills;
 	private String overallEvaluation;
-    @ManyToMany	 
-	private List<Interviewer> interviewer;
-	@OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+	private Interviewer interviewer;
+	@OneToOne(cascade = CascadeType.ALL)
 	private Round round;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Interview interview;
-	public String getFeedback_Id() {
+	public Integer getFeedback_Id() {
 		return feedback_Id;
 	}
-	public void setFeedback_Id(String feedback_Id) {
+	public void setFeedback_Id(Integer feedback_Id) {
 		this.feedback_Id = feedback_Id;
 	}
 	public String getFeedback() {
@@ -70,10 +73,10 @@ public class InterviewFeedback {
 	public void setOverallEvaluation(String overallEvaluation) {
 		this.overallEvaluation = overallEvaluation;
 	}
-	public List<Interviewer> getInterviewer() {
+	public Interviewer getInterviewer() {
 		return interviewer;
 	}
-	public void setInterviewer(List<Interviewer> interviewer) {
+	public void setInterviewer(Interviewer interviewer) {
 		this.interviewer = interviewer;
 	}
 	public Round getRound() {

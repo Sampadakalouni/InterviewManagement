@@ -10,14 +10,14 @@ public class Round {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int roundId;
+	private Integer roundId;
 	private int roundNumber;
 	private String name;
 	private String description;
-	public int getRoundId() {
+	public Integer getRoundId() {
 		return roundId;
 	}
-	public void setRoundId(int roundId) {
+	public void setRoundId(Integer roundId) {
 		this.roundId = roundId;
 	}
 	public int getRoundNumber() {

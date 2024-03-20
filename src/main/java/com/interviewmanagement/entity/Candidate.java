@@ -10,7 +10,7 @@ public class Candidate {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private  int candidateId;
+	private Integer candidateId;
 	private String name;
 	private String email;
 	private String phone;
@@ -20,10 +20,10 @@ public class Candidate {
 	private String education;
 	private String experience;
 	private String resume;
-	public int getCandidateId() {
+	public Integer getCandidateId() {
 		return candidateId;
 	}
-	public void setCandidateId(int candidateId) {
+	public void setCandidateId(Integer candidateId) {
 		this.candidateId = candidateId;
 	}
 	public String getName() {
