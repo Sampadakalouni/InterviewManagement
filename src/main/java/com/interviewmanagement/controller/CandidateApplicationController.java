@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.interviewmanagement.dto.ApplicationFormDto;
 import com.interviewmanagement.entity.Application;
 import com.interviewmanagement.entity.Candidate;
 import com.interviewmanagement.service.CandidateApplicationService;
@@ -28,9 +29,9 @@ public class CandidateApplicationController {
 	}
 	
 	@PostMapping("/applicationformsubmit")
-	public Application applicationForm(@RequestBody Application application)
+	public Application applicationForm(@RequestBody ApplicationFormDto applicationFormDto)
 	{
-		return this.candidateApplication.applicationForm(application);
+		return this.candidateApplication.applicationForm(applicationFormDto);
 	}
 	
 	@GetMapping("/viewapplicationform/{applicationsubmissiondate}")
