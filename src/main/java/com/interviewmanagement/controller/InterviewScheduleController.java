@@ -42,9 +42,9 @@ public class InterviewScheduleController {
 	}
 	
 	@PostMapping("/updatespecificinterviews")
-	public Object updateInterviews(@RequestBody Interview interview)
+	public Object updateInterviews(@RequestBody InterviewScheduleDto interviewScheduleDto)
 	{
-		return this.scheduleService.updateInterviews(interview);
+		return this.scheduleService.updateInterviews(interviewScheduleDto);
 	}
 	
 	@GetMapping("/deletespecificinterviews/{interviewScheduleId}/{scheduleId}")

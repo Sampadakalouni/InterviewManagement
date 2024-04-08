@@ -2,19 +2,34 @@ package com.interviewmanagement.dto;
 
 import java.util.List;
 
+import lombok.NonNull;
+
 public class InterviewScheduleDto {
 
+	@NonNull
 	private Integer interviewScheduleId;
 	private String scheduledDate;
 	private String scheduledTime;
 	private String location;
 	private String status;
+	@NonNull
 	private Integer jobPosting;
+	@NonNull
 	private Integer candidate;
+	@NonNull
 	private List<Integer> interviewers;
 	private String interviewType;
 	private String interviewDuration;
 	private String notes;
+	private Integer round;
+	
+	
+	public Integer getRound() {
+		return round;
+	}
+	public void setRound(Integer round) {
+		this.round = round;
+	}
 	public Integer getInterviewScheduleId() {
 		return interviewScheduleId;
 	}

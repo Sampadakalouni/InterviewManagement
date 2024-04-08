@@ -1,6 +1,8 @@
 package com.interviewmanagement.service;
 
 import java.util.List;
+
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,14 @@ import com.interviewmanagement.dao.InterviewDao;
 import com.interviewmanagement.dao.InterviewScheduleDao;
 import com.interviewmanagement.dao.InterviewerDao;
 import com.interviewmanagement.dao.JobPostingDao;
+import com.interviewmanagement.dao.RoundDao;
 import com.interviewmanagement.dto.InterviewScheduleDto;
 import com.interviewmanagement.entity.Candidate;
 import com.interviewmanagement.entity.Interview;
 import com.interviewmanagement.entity.InterviewSchedule;
 import com.interviewmanagement.entity.Interviewer;
 import com.interviewmanagement.entity.JobPosting;
+import com.interviewmanagement.entity.Round;
 
 @Service
 public class InterviewScheduleService {
@@ -35,6 +39,9 @@ public class InterviewScheduleService {
 
 	@Autowired
 	private InterviewerDao interviewerDao;
+	
+	@Autowired
+	private RoundDao roundDao;
 
 	public InterviewSchedule scheduleInterviews(InterviewSchedule interviewSchedule) {
 
@@ -44,19 +51,19 @@ public class InterviewScheduleService {
 
 	public Interview addInterviews(InterviewScheduleDto interviewScheduleDto) {
 
-		Optional<InterviewSchedule> findById = this.interviewScheduleDao.findById(interviewScheduleDto.getScheduleId());
+		Optional<InterviewSchedule> findById = this.interviewScheduleDao.findById(interviewScheduleDto.getInterviewScheduleId());
 		Interview interview = new Interview();
-		interview.setInterviewScheduleId(interviewScheduleDto.getInterviewScheduleId());
+	
 		interview.setScheduledDate(interviewScheduleDto.getScheduledDate());
 		interview.setScheduledTime(interviewScheduleDto.getScheduledTime());
 		interview.setLocation(interviewScheduleDto.getLocation());
 		interview.setStatus(interviewScheduleDto.getStatus());
-		if (interviewScheduleDto.getJobPosting() != 0) {
+		if (interviewScheduleDto.getJobPosting() != null) {
 			Optional<JobPosting> findById2 = this.jobPostingDao.findById(interviewScheduleDto.getJobPosting());
 			if (!findById2.isEmpty())
 				interview.setJobPosting(findById2.get());
 		}
-		if (interviewScheduleDto.getCandidate() !=0) {
+		if (interviewScheduleDto.getCandidate() !=null) {
 			Optional<Candidate> findById2 = this.candiateDao.findById(interviewScheduleDto.getCandidate());
 			if (!findById2.isEmpty())
 				interview.setCandidate(findById2.get());
@@ -65,6 +72,14 @@ public class InterviewScheduleService {
 			List<Interviewer> findAllById = this.interviewerDao.findAllById(interviewScheduleDto.getInterviewers());
 			if (!findAllById.isEmpty())
 				interview.setInterviewers(findAllById);
+		}
+		if(interviewScheduleDto.getRound() != null)
+		{
+			Optional<Round> findById2 = this.roundDao.findById(interviewScheduleDto.getRound());
+			if(!findById2.isEmpty())
+			{
+				interview.setRound(findById2.get());
+			}
 		}
 		interview.setInterviewType(interviewScheduleDto.getInterviewType());
 		interview.setInterviewDuration(interviewScheduleDto.getInterviewDuration());
@@ -81,9 +96,49 @@ public class InterviewScheduleService {
 		return "You Have sucessfully deleted the interviewschedules for a candidate";
 	}
 
-	public Object updateInterviews(Interview interview) {
+	public Object updateInterviews(InterviewScheduleDto interviewScheduleDto) {
+		if(interviewScheduleDto.getInterviewScheduleId() != null)
+		{
+			Optional<InterviewSchedule> findById = this.interviewScheduleDao.findById(interviewScheduleDto.getInterviewScheduleId());
+			Interview interview = new Interview();
+			interview.setInterviewScheduleId(interviewScheduleDto.getInterviewScheduleId());
+			interview.setScheduledDate(interviewScheduleDto.getScheduledDate());
+			interview.setScheduledTime(interviewScheduleDto.getScheduledTime());
+			interview.setLocation(interviewScheduleDto.getLocation());
+			interview.setStatus(interviewScheduleDto.getStatus());
+			if (interviewScheduleDto.getJobPosting() != 0) {
+				Optional<JobPosting> findById2 = this.jobPostingDao.findById(interviewScheduleDto.getJobPosting());
+				if (!findById2.isEmpty())
+					interview.setJobPosting(findById2.get());
+			}
+			if (interviewScheduleDto.getCandidate() !=0) {
+				Optional<Candidate> findById2 = this.candiateDao.findById(interviewScheduleDto.getCandidate());
+				if (!findById2.isEmpty())
+					interview.setCandidate(findById2.get());
+			}
+			if (!interviewScheduleDto.getInterviewers().isEmpty()) {
+				List<Interviewer> findAllById = this.interviewerDao.findAllById(interviewScheduleDto.getInterviewers());
+				if (!findAllById.isEmpty())
+					interview.setInterviewers(findAllById);
+			}
+			if(interviewScheduleDto.getRound() != null)
+			{
+				Optional<Round> findById2 = this.roundDao.findById(interviewScheduleDto.getRound());
+				if(!findById2.isEmpty())
+				{
+					interview.setRound(findById2.get());
+				}
+			}
+			interview.setInterviewType(interviewScheduleDto.getInterviewType());
+			interview.setInterviewDuration(interviewScheduleDto.getInterviewDuration());
+			interview.setNotes(interviewScheduleDto.getNotes());
+			return this.dao.saveAndFlush(interview);
+		}
 
-		return this.dao.saveAndFlush(interview);
+		else {
+			return "Invalid update operation";
+		}
+		
 	}
 
 	public String deleteInterviewSchedule(Integer scheduleId, Integer interviewScheduleId) {

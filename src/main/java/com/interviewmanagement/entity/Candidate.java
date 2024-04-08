@@ -1,9 +1,14 @@
 package com.interviewmanagement.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Candidate {
@@ -20,6 +25,15 @@ public class Candidate {
 	private String education;
 	private String experience;
 	private String resume;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Interview> interviews;
+	
+	public List<Interview> getInterviews() {
+		return interviews;
+	}
+	public void setInterviews(List<Interview> interviews) {
+		this.interviews = interviews;
+	}
 	public Integer getCandidateId() {
 		return candidateId;
 	}

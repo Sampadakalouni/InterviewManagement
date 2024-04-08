@@ -14,6 +14,7 @@ public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private  Integer  applicationId;
+	
 	private String status;
 	private String submissionDate;
 	private String coverLetterText;
@@ -22,6 +23,7 @@ public class Application {
 	private JobPosting jobPosting;
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Candidate candidate;
+	
 	public Integer getApplicationId() {
 		return applicationId;
 	}

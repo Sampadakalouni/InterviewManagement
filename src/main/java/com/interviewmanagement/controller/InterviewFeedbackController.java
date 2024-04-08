@@ -1,10 +1,6 @@
 package com.interviewmanagement.controller;
 
 import java.util.List;
-
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.interviewmanagement.dto.InterviewFeedBackDto;
 import com.interviewmanagement.entity.InterviewFeedback;
 import com.interviewmanagement.service.InterviewFeedbackService;
 
@@ -27,9 +23,9 @@ public class InterviewFeedbackController {
 	
 	
 	@PostMapping("/saveinterviewfeedback")
-	public InterviewFeedback saveInterviewFeedback(@RequestBody InterviewFeedback interviewFeedback)
+	public InterviewFeedback saveInterviewFeedback(@RequestBody InterviewFeedBackDto interviewFeedBackDto)
 	{
-		return this.feedbackService.saveInterviewFeedback(interviewFeedback);
+		return this.feedbackService.saveInterviewFeedback(interviewFeedBackDto);
 	}
 	
 	
@@ -42,7 +38,7 @@ public class InterviewFeedbackController {
 	
 	@GetMapping("/viewinterviewfeedbacks")
 	public List<InterviewFeedback> viewInterviewFeedback()
-	{
+	{ 
 		return this.feedbackService.viewInterviewFeedback();
 	}
 	

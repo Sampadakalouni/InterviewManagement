@@ -49,8 +49,9 @@ public class CandidateApplicationController {
 	
 
 	@PostMapping("/updateapplicationform")
-	public Object updateApllicationForm(@RequestBody Application application)
+	public Object updateApllicationForm(@RequestBody ApplicationFormDto applicationFormDto)
 	{
-		return this.candidateApplication.updateApplicationForm(application);
+
+		return this.candidateApplication.updateApplicationForm(applicationFormDto);
 	}
 }

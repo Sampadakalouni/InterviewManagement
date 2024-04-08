@@ -1,6 +1,7 @@
 package com.interviewmanagement.service;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class CandidateApplicationService {
 	@Autowired
 	private JobPostingDao jobPostingDao;
 	
+	
 	public Candidate registerCandidate(Candidate candidate) {
 		candidate.setCandidateId(null);
 		return this.candiateDao.saveAndFlush(candidate);
@@ -35,6 +37,7 @@ public class CandidateApplicationService {
 
 	public Application applicationForm(ApplicationFormDto applicationFormDto) {
 		// TODO Auto-generated method stub
+		
 		Application application= new Application();
 		Optional<Candidate> findById = this.candiateDao.findById(applicationFormDto.getCandidate());
 		application.setCandidate(findById.get());
@@ -68,16 +71,32 @@ public class CandidateApplicationService {
 		}
 	}
 
-	public Object updateApplicationForm(Application application) {
-		
-		if(application.getApplicationId() != null)
+	public Object updateApplicationForm(ApplicationFormDto applicationFormDto) {
+
+		 if(applicationFormDto.getApplicationId() != null)
 		{
-			return this.applicationDao.saveAndFlush(application);
+			   
+
+			Optional<Application> findById = this.applicationDao.findById(applicationFormDto.getApplicationId());
+			Application application = findById.get();
+		
+			application.setCoverLetterText(applicationFormDto.getCoverLetterText());
+			application.setStatus(applicationFormDto.getStatus());
+			application.setStatusDate(applicationFormDto.getStatusDate());
+			application.setSubmissionDate(applicationFormDto.getSubmissionDate());
+		    Optional<Candidate> findById2 = this.candiateDao.findById(applicationFormDto.getCandidate());
+		    application.setCandidate(findById2.get());
+		    Optional<JobPosting> findById3 = this.jobPostingDao.findById(applicationFormDto.getJobPosting());
+		    application.setJobPosting(findById3.get());
+		    return this.applicationDao.saveAndFlush(application);
+			
+			
 		}
 		else
 		{
-			return"Invalid update operation";
+			return "Invalid update operation";
 		}
+		
 	}
 
 	

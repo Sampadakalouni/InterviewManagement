@@ -7,8 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Interview {
@@ -16,7 +18,8 @@ public class Interview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer interviewScheduleId ;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "round")
 	private Round round;
 	private String scheduledDate;
 	private String scheduledTime;
@@ -24,12 +27,13 @@ public class Interview {
 	private String status;
 	private String round1Feedback;
 	private String round1Rating;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "jobPostingId")
 	private JobPosting jobPosting;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Candidate candidate;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Interviewer> interviewers;
+    @ManyToMany	
+    private List<Interviewer> interviewers;
 	private String round2Feedback;
 	private String round2Rating;
 	private String round3Feedback;
@@ -39,6 +43,31 @@ public class Interview {
 	private String interviewResult;
 	private String notes;
 	
+  
+	public List<Interviewer> getInterviewers() {
+		return interviewers;
+	}
+	public void setInterviewers(List<Interviewer> interviewers) {
+		this.interviewers = interviewers;
+	}
+	public List<InterviewFeedback> getInterviewFeedbacks() {
+		return interviewFeedbacks;
+	}
+	public void setInterviewFeedbacks(List<InterviewFeedback> interviewFeedbacks) {
+		this.interviewFeedbacks = interviewFeedbacks;
+	}
+	public InterviewSchedule getInterviewSchedule() {
+		return interviewSchedule;
+	}
+	public void setInterviewSchedule(InterviewSchedule interviewSchedule) {
+		this.interviewSchedule = interviewSchedule;
+	}
+	@OneToMany(mappedBy = "interview",cascade = CascadeType.ALL)
+	private List<InterviewFeedback> interviewFeedbacks;
+	
+	@ManyToOne
+	@JoinColumn(name = "interviewId")
+	private InterviewSchedule interviewSchedule;
 	
 	public Integer getInterviewScheduleId() {
 		return interviewScheduleId;
@@ -101,12 +130,7 @@ public class Interview {
 	public void setCandidate(Candidate candidate) {
 		this.candidate = candidate;
 	}
-	public List<Interviewer> getInterviewers() {
-		return interviewers;
-	}
-	public void setInterviewers(List<Interviewer> interviewers) {
-		this.interviewers = interviewers;
-	}
+	
 	public String getRound2Feedback() {
 		return round2Feedback;
 	}
@@ -155,25 +179,44 @@ public class Interview {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+//	@Override
+//	public String toString() {
+//		return "Interview [interviewScheduleId=" + interviewScheduleId + ", round=" + round + ", scheduledDate="
+//				+ scheduledDate + ", scheduledTime=" + scheduledTime + ", location=" + location + ", status=" + status
+//				+ ", round1Feedback=" + round1Feedback + ", round1Rating=" + round1Rating + ", jobPosting=" + jobPosting
+//				+ ", candidate=" + candidate + ", interviewers=" + interviewers + ", round2Feedback=" + round2Feedback
+//				+ ", round2Rating=" + round2Rating + ", round3Feedback=" + round3Feedback + ", round3Rating="
+//				+ round3Rating + ", interviewType=" + interviewType + ", interviewDuration=" + interviewDuration
+//				+ ", interviewResult=" + interviewResult + ", notes=" + notes + ", getInterviewScheduleId()="
+//				+ getInterviewScheduleId() + ", getRound()=" + getRound() + ", getScheduledDate()=" + getScheduledDate()
+//				+ ", getScheduledTime()=" + getScheduledTime() + ", getLocation()=" + getLocation() + ", getStatus()="
+//				+ getStatus() + ", getRound1Feedback()=" + getRound1Feedback() + ", getRound1Rating()="
+//				+ getRound1Rating() + ", getJobPosting()=" + getJobPosting() + ", getCandidate()=" + getCandidate()
+//				+ ", getInterviewers()=" + getInterviewers() + ", getRound2Feedback()=" + getRound2Feedback()
+//				+ ", getRound2Rating()=" + getRound2Rating() + ", getRound3Feedback()=" + getRound3Feedback()
+//				+ ", getRound3Rating()=" + getRound3Rating() + ", getInterviewType()=" + getInterviewType()
+//				+ ", getInterviewDuration()=" + getInterviewDuration() + ", getInterviewResult()="
+//				+ getInterviewResult() + ", getNotes()=" + getNotes() + ", getClass()=" + getClass() + ", hashCode()="
+//				+ hashCode() + ", toString()=" + super.toString() + "]";
+//	}
 	@Override
 	public String toString() {
 		return "Interview [interviewScheduleId=" + interviewScheduleId + ", round=" + round + ", scheduledDate="
 				+ scheduledDate + ", scheduledTime=" + scheduledTime + ", location=" + location + ", status=" + status
 				+ ", round1Feedback=" + round1Feedback + ", round1Rating=" + round1Rating + ", jobPosting=" + jobPosting
-				+ ", candidate=" + candidate + ", interviewers=" + interviewers + ", round2Feedback=" + round2Feedback
-				+ ", round2Rating=" + round2Rating + ", round3Feedback=" + round3Feedback + ", round3Rating="
-				+ round3Rating + ", interviewType=" + interviewType + ", interviewDuration=" + interviewDuration
-				+ ", interviewResult=" + interviewResult + ", notes=" + notes + ", getInterviewScheduleId()="
-				+ getInterviewScheduleId() + ", getRound()=" + getRound() + ", getScheduledDate()=" + getScheduledDate()
-				+ ", getScheduledTime()=" + getScheduledTime() + ", getLocation()=" + getLocation() + ", getStatus()="
-				+ getStatus() + ", getRound1Feedback()=" + getRound1Feedback() + ", getRound1Rating()="
-				+ getRound1Rating() + ", getJobPosting()=" + getJobPosting() + ", getCandidate()=" + getCandidate()
-				+ ", getInterviewers()=" + getInterviewers() + ", getRound2Feedback()=" + getRound2Feedback()
-				+ ", getRound2Rating()=" + getRound2Rating() + ", getRound3Feedback()=" + getRound3Feedback()
-				+ ", getRound3Rating()=" + getRound3Rating() + ", getInterviewType()=" + getInterviewType()
-				+ ", getInterviewDuration()=" + getInterviewDuration() + ", getInterviewResult()="
-				+ getInterviewResult() + ", getNotes()=" + getNotes() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", candidate=" + candidate + ", round2Feedback=" + round2Feedback + ", round2Rating=" + round2Rating
+				+ ", round3Feedback=" + round3Feedback + ", round3Rating=" + round3Rating + ", interviewType="
+				+ interviewType + ", interviewDuration=" + interviewDuration + ", interviewResult=" + interviewResult
+				+ ", notes=" + notes + ", getInterviewScheduleId()=" + getInterviewScheduleId() + ", getRound()="
+				+ getRound() + ", getScheduledDate()=" + getScheduledDate() + ", getScheduledTime()="
+				+ getScheduledTime() + ", getLocation()=" + getLocation() + ", getStatus()=" + getStatus()
+				+ ", getRound1Feedback()=" + getRound1Feedback() + ", getRound1Rating()=" + getRound1Rating()
+				+ ", getJobPosting()=" + getJobPosting() + ", getCandidate()=" + getCandidate()
+				+ ", getRound2Feedback()=" + getRound2Feedback() + ", getRound2Rating()=" + getRound2Rating()
+				+ ", getRound3Feedback()=" + getRound3Feedback() + ", getRound3Rating()=" + getRound3Rating()
+				+ ", getInterviewType()=" + getInterviewType() + ", getInterviewDuration()=" + getInterviewDuration()
+				+ ", getInterviewResult()=" + getInterviewResult() + ", getNotes()=" + getNotes() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 	
 	

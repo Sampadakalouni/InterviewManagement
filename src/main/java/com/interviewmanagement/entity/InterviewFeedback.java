@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -25,12 +26,16 @@ public class InterviewFeedback {
 	private String technicalSkills;
 	private String communicationSkills;
 	private String overallEvaluation;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "interviewerId")
 	private Interviewer interviewer;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "roundId")
 	private Round round;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "interviewId", referencedColumnName = "interviewScheduleId")
 	private Interview interview;
+	
 	public Integer getFeedback_Id() {
 		return feedback_Id;
 	}
